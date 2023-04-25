@@ -189,12 +189,90 @@ public class SoftwareAfaTest {
 		boolean evaluarAgregarEquipoAlSistema=sa.agregarEquipoAlSistema(eq);
 		assertTrue(evaluarAgregarEquipoAlSistema);
 		
-		jugador ju=new Jugador("Messi",10000.0,35,EquiposDeAfa.SAN_LORENZO);
+		eq=new Equipo("COLON",0.0,0.0);
+		evaluarAgregarEquipoAlSistema=sa.agregarEquipoAlSistema(eq);
+		assertTrue(evaluarAgregarEquipoAlSistema);
+		
+		
+		Jugador ju=new Jugador("Messi",10000.0,35,EquiposDeAfa.SAN_LORENZO);
 		boolean validarAgregarJugador=sa.agregarJugador(ju);
 		assertTrue(validarAgregarJugador);
 		
+		ju=new Jugador("Pepi",54100.0,28,EquiposDeAfa.SAN_LORENZO);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		ju=new Jugador("Raul",700.0,19,EquiposDeAfa.SAN_LORENZO);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		ju=new Jugador("Alberto",450.0,90,EquiposDeAfa.SAN_LORENZO);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		ju=new Jugador("Lola",600.0,25,EquiposDeAfa.SAN_LORENZO);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		
+		ju=new Jugador("Kun",850.0,25,EquiposDeAfa.COLON);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		ju=new Jugador("Ren",1200.0,25,EquiposDeAfa.COLON);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		
+		valorTotalDeEquipo=sa.calcularElValorDelEquipo(EquiposDeAfa.SAN_LORENZO);
+		assertEquals(65850, valorTotalDeEquipo,0.01);
+		
+		valorTotalDeEquipo=0.0;
+		
+		valorTotalDeEquipo=sa.calcularElValorDelEquipo(EquiposDeAfa.COLON);
+		assertEquals(2050, valorTotalDeEquipo,0.01);
+		
+		
 		
 	}
+	
+	
+	@Test 
+	public void evaluarPromedioDeEdadDelEquipo() {
+		
+		SoftwareAfa sa=new SoftwareAfa("SOFTWARE DE AFA");
+		Double edadPromedioDelEquipo=0.0;
+		
+		Equipo eq=new Equipo("SAN_LORENZO",0.0,0.0);
+		boolean evaluarAgregarEquipoAlSistema=sa.agregarEquipoAlSistema(eq);
+		assertTrue(evaluarAgregarEquipoAlSistema);
+		
+		Jugador ju=new Jugador("Messi",10000.0,35,EquiposDeAfa.SAN_LORENZO);
+		boolean validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		ju=new Jugador("Pepi",54100.0,28,EquiposDeAfa.SAN_LORENZO);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		ju=new Jugador("Raul",700.0,19,EquiposDeAfa.SAN_LORENZO);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		ju=new Jugador("Alberto",450.0,90,EquiposDeAfa.SAN_LORENZO);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		ju=new Jugador("Lola",600.0,25,EquiposDeAfa.SAN_LORENZO);
+		validarAgregarJugador=sa.agregarJugador(ju);
+		assertTrue(validarAgregarJugador);
+		
+		
+		edadPromedioDelEquipo=sa.evaluarEdadPromedioDelEquipo(EquiposDeAfa.SAN_LORENZO);
+		assertEquals(39.4, edadPromedioDelEquipo,0.01);
+		
+		
+	}
+	
 	
 	
 }
