@@ -4,9 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import ar.edu.unlam.dominio.Amonestados;
 import ar.edu.unlam.dominio.Equipo;
 import ar.edu.unlam.dominio.EquiposDeAfa;
+import ar.edu.unlam.dominio.Expulsados;
+import ar.edu.unlam.dominio.Gol;
 import ar.edu.unlam.dominio.Jugador;
+import ar.edu.unlam.dominio.PartidoRegistrado;
 import ar.edu.unlam.dominio.SoftwareAfa;
 
 public class SoftwareAfaTest {
@@ -272,6 +276,154 @@ public class SoftwareAfaTest {
 		
 		
 	}
+	
+	@Test
+	public void evaluarAgregarGol() {
+		
+		int cantidadDeGolesRealizadosEnTotal=3;
+		int cantidadDeJugadoresAmonestadosEnTotal=5;
+		int cantidadDeJugadoresExpulsadosEnTotal=2;
+		PartidoRegistrado pr=new PartidoRegistrado(0,cantidadDeGolesRealizadosEnTotal,cantidadDeJugadoresAmonestadosEnTotal,cantidadDeJugadoresExpulsadosEnTotal);
+		boolean evaluarSiRegistrarGol=false;
+		
+		SoftwareAfa sa=new SoftwareAfa("SOFTWARE DE AFA");
+		Gol gol=null;
+		
+		String nombreDelAutorDelGol="Messi";
+		String minutoDelGol="(25:36)";
+		
+		gol=new Gol(nombreDelAutorDelGol,minutoDelGol);
+		evaluarSiRegistrarGol=pr.registrarGol(gol,cantidadDeGolesRealizadosEnTotal);
+		assertTrue(evaluarSiRegistrarGol);
+		
+		gol=new Gol(nombreDelAutorDelGol,minutoDelGol);
+		evaluarSiRegistrarGol=pr.registrarGol(gol,cantidadDeGolesRealizadosEnTotal);
+		assertTrue(evaluarSiRegistrarGol);
+		
+		gol=new Gol(nombreDelAutorDelGol,minutoDelGol);
+		evaluarSiRegistrarGol=pr.registrarGol(gol,cantidadDeGolesRealizadosEnTotal);
+		assertTrue(evaluarSiRegistrarGol);
+		
+		//_AGREGA UN CUARTO GOL_
+		gol=new Gol(nombreDelAutorDelGol,minutoDelGol);
+		evaluarSiRegistrarGol=pr.registrarGol(gol,cantidadDeGolesRealizadosEnTotal);
+		assertFalse(evaluarSiRegistrarGol);
+		
+	}
+	
+	@Test
+	public void evaluarAgregarAmonestados() {
+		
+		int cantidadDeGolesRealizadosEnTotal=3;
+		int cantidadDeJugadoresAmonestadosEnTotal=5;
+		int cantidadDeJugadoresExpulsadosEnTotal=2;
+		PartidoRegistrado pr=new PartidoRegistrado(0,cantidadDeGolesRealizadosEnTotal,cantidadDeJugadoresAmonestadosEnTotal,cantidadDeJugadoresExpulsadosEnTotal);
+		boolean evaluarSiRegistrarAmonestacion=false;
+		
+		SoftwareAfa sa=new SoftwareAfa("SOFTWARE DE AFA");
+		Amonestados amonestados=null;
+		
+		String nombreDelAmonestado="Pepe";
+		String minuto="(14:02)";
+		Integer cantidadDeAmonestaciones=2;
+		Boolean jugadorExpulsado=true;
+		
+		amonestados=new Amonestados(nombreDelAmonestado,minuto,cantidadDeAmonestaciones,jugadorExpulsado);
+		evaluarSiRegistrarAmonestacion=pr.registrarAmonestacion(amonestados,cantidadDeJugadoresAmonestadosEnTotal);
+		assertTrue(evaluarSiRegistrarAmonestacion);
+		
+		
+	}
+	
+	@Test
+	public void evaluarAgregarExpulsados() {
+		
+		int cantidadDeGolesRealizadosEnTotal=3;
+		int cantidadDeJugadoresAmonestadosEnTotal=5;
+		int cantidadDeJugadoresExpulsadosEnTotal=2;
+		PartidoRegistrado pr=new PartidoRegistrado(0,cantidadDeGolesRealizadosEnTotal,cantidadDeJugadoresAmonestadosEnTotal,cantidadDeJugadoresExpulsadosEnTotal);
+		boolean evaluarSiRegistrarExpulsacion=false;
+		
+		SoftwareAfa sa=new SoftwareAfa("SOFTWARE DE AFA");
+		Expulsados expulsados=null;
+		
+		String nombreDelExpulsados="Pepe";
+		Boolean expulsadoPorDobleAmonestacion=false;
+		
+		expulsados=new Expulsados(nombreDelExpulsados,expulsadoPorDobleAmonestacion);
+		evaluarSiRegistrarExpulsacion=pr.registrarExpulsion(expulsados,cantidadDeJugadoresExpulsadosEnTotal);
+		assertTrue(evaluarSiRegistrarExpulsacion);
+		
+		
+	}
+	
+	
+	@Test
+	public void evaluarRegistrarPartido() {
+		
+		SoftwareAfa sa=new SoftwareAfa("SOFTWARE DE AFA");
+		Equipo equipoLocal=null;
+		Equipo equipoVisitante=null;
+		Equipo equipoInexistente=null;
+		
+		//_SE AGREGAN LOS EQUIPOS_
+		Equipo eq=new Equipo("RIVER_PLATE",0.0,0.0);
+		boolean evaluarAgregarEquipoAlSistema=sa.agregarEquipoAlSistema(eq);
+		assertTrue(evaluarAgregarEquipoAlSistema);
+		
+		eq=new Equipo("BOCA",0.0,0.0);
+		evaluarAgregarEquipoAlSistema=sa.agregarEquipoAlSistema(eq);
+		assertTrue(evaluarAgregarEquipoAlSistema);
+		
+		
+		//_SE DEFINE EL EQUIPO LOCAL Y VISITANTE
+		equipoLocal=sa.obtenerEquipoConNombre("RIVER_PLATE");
+		equipoVisitante=sa.obtenerEquipoConNombre("BOCA");
+		equipoInexistente=sa.obtenerEquipoConNombre("EQUIPO INEXISTENTE");
+		
+		assertNotNull(equipoLocal);
+		assertNotNull(equipoVisitante);
+		assertNull(equipoInexistente);
+		
+		
+		//_SE REGISTRA UN PARTIDO_
+		int cantidadDeGolesRealizadosEnTotal=3;
+		int cantidadDeJugadoresAmonestadosEnTotal=5;
+		int cantidadDeJugadoresExpulsadosEnTotal=2;
+		int indiceDePartidoRegistrado=1;
+		PartidoRegistrado pr=new PartidoRegistrado(indiceDePartidoRegistrado,cantidadDeGolesRealizadosEnTotal,cantidadDeJugadoresAmonestadosEnTotal,cantidadDeJugadoresExpulsadosEnTotal);
+		Boolean verificarRegistrarPartido=false;
+		
+			//GOL_
+			String nombreDelAutorDelGol="Messi";
+			String minutoDelGol="(25:36)";
+		
+			Gol gol=new Gol("Lucho","(46:07)");
+			Boolean evaluarSiRegistrarGol=pr.registrarGol(gol,cantidadDeGolesRealizadosEnTotal);
+			assertTrue(evaluarSiRegistrarGol);
+		
+		
+			//_AMONESTADOS_
+			Amonestados amonestados=new Amonestados("Rojo","(12:58)",1,false);
+			Boolean evaluarSiRegistrarAmonestacion=pr.registrarAmonestacion(amonestados,cantidadDeJugadoresAmonestadosEnTotal);
+			assertTrue(evaluarSiRegistrarAmonestacion);
+			
+			amonestados=new Amonestados("Kike","(40:14)",2,true);
+			evaluarSiRegistrarAmonestacion=pr.registrarAmonestacion(amonestados,cantidadDeJugadoresAmonestadosEnTotal);
+			assertTrue(evaluarSiRegistrarAmonestacion);
+			
+			//_EXPULSADOS_
+			Expulsados expulsados=new Expulsados("Ándres",true);
+			Boolean evaluarSiRegistrarExpulsacion=pr.registrarExpulsion(expulsados,cantidadDeJugadoresExpulsadosEnTotal);
+			assertTrue(evaluarSiRegistrarExpulsacion);
+		
+			
+		verificarRegistrarPartido=sa.registrarPartido(pr);
+		assertTrue(verificarRegistrarPartido);
+			
+			
+	}
+
 	
 	
 	

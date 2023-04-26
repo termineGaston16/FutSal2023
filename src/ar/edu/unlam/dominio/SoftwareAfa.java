@@ -7,11 +7,13 @@ public class SoftwareAfa {
 
 	private String nombreDelSoftware;
 	private ArrayList<Equipo> equiposDeAfa;
+	private ArrayList<PartidoRegistrado> partidosRegistrados;
 	
 
 	public SoftwareAfa(String string) {
 		this.nombreDelSoftware=string;
 		this.equiposDeAfa=new ArrayList<>();
+		this.partidosRegistrados=new ArrayList<>(); 
 	}
 
 	public boolean agregarEquipoAlSistema(Equipo eq) {
@@ -70,6 +72,24 @@ public class SoftwareAfa {
 		
 			
 		return promedioDelEdad;
+	}
+
+	
+	public Equipo obtenerEquipoConNombre(String string) {
+		
+		Equipo equipoDevolver=null;
+		
+		for (Equipo equipo : equiposDeAfa) {
+			if (equipo.getNombreDelEquipo().equals(string)) {
+				equipoDevolver=equipo;
+			}
+		}
+		
+		return equipoDevolver;
+	}
+
+	public Boolean registrarPartido(PartidoRegistrado pr) {
+		return this.partidosRegistrados.add(pr);
 	}
 
 	
